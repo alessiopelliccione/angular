@@ -194,7 +194,7 @@ const DOCS_SUB_NAVIGATION_DATA: NavigationItem[] = [
             contentPath: 'guide/templates/overview',
           },
           {
-            label: 'Binding dynamic text and properties',
+            label: 'Binding dynamic text, properties and attributes',
             path: 'guide/templates/binding',
             contentPath: 'guide/templates/binding',
           },
