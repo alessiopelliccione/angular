@@ -93,7 +93,9 @@ You can bind to directive properties as well.
 
 ### Attributes
 
-When you need to set HTML attributes that do not have corresponding DOM properties, such as ARIA attributes or SVG attributes, you can bind attributes to elements in your template with the `attr.` prefix.
+When you need to set HTML attributes that do not have corresponding DOM properties, such as SVG attributes, you can bind attributes to elements in your template with the `attr.` prefix.
+
+NOTE: Angular no longer requires the `attr.` prefix for ARIA bindings.
 
 ```angular-html
 <!-- Bind the `role` attribute on the `<ul>` element to the component's `listRole` property. -->
@@ -113,10 +115,10 @@ You can also use text interpolation syntax in properties and attributes by using
 <img src="profile-photo.jpg" alt="Profile photo of {{ firstName() }}" >
 ```
 
-To bind to an attribute with the text interpolation syntax, prefix the attribute name with `attr.`
+To bind to an ARIA attribute with text interpolation, you can use it directly like any other HTML attribute.
 
 ```angular-html
-<button attr.aria-label="Save changes to {{ objectType() }}">
+<button aria-label="Save changes to {{ objectType() }}">
 ```
 
 ## CSS class and style property bindings
