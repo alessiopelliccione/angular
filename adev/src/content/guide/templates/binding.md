@@ -104,6 +104,40 @@ In this example, every time `listRole` changes, Angular automatically sets the `
 
 If the value of an attribute binding is `null`, Angular removes the attribute by calling `removeAttribute`.
 
+### ARIA attributes (string-based)
+
+Angular supports binding to ARIA attributes without the `attr.` prefix.
+
+```angular-html
+<button type="button" [aria-label]="actionLabel()">
+  {{ actionLabel() }}
+</button>
+```
+
+This is an attribute binding. Angular writes the string value to the element’s `aria-label` attribute and removes it when the bound value is `null`.
+
+### ARIA properties (DOM APIs)
+
+Some ARIA features expose DOM properties or directive inputs that accept structured values, such as element references. Bind to these with standard property binding syntax.
+
+```angular-ts
+@Component({
+  template: `
+    <h2 #dialogTitle>Attention</h2>
+    <p #dialogDescription>Please review your answers before continuing.</p>
+
+    <section
+      role="dialog"
+      [ariaLabelledByElements]="[dialogTitle, dialogDescription]">
+      <ng-content />
+    </section>
+  `,
+})
+export class ReviewDialog {}
+```
+
+Here `[ariaLabelledByElements]` is a property binding. Angular passes an array of `Element` references to the DOM API so the element’s `aria-labelledby` relationship stays synchronized.
+
 ### Text interpolation in properties and attributes
 
 You can also use text interpolation syntax in properties and attributes by using the double curly brace syntax instead of square braces around the property or attribute name. When using this syntax, Angular treats the assignment as a property binding.
