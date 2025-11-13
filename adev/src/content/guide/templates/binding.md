@@ -1,4 +1,4 @@
-# Binding dynamic text, properties and attributes
+# Binding dynamic text and properties
 
 In Angular, a **binding** creates a dynamic connection between a component's template and its data. This connection ensures that changes to the component's data automatically update the rendered template.
 
@@ -56,9 +56,9 @@ You can use text interpolation anywhere you would normally write text in HTML.
 
 All expression values are converted to a string. Objects and arrays are converted using the value’s `toString` method.
 
-## Binding dynamic properties and attributes
+## Binding dynamic properties
 
-Angular supports binding dynamic values into object properties and HTML attributes with square brackets.
+Angular supports binding dynamic values into object properties with square brackets.
 
 You can bind to properties on an HTML element's DOM instance, a [component](guide/components) instance, or a [directive](guide/directives) instance.
 
@@ -91,34 +91,13 @@ You can bind to directive properties as well.
 <img [ngSrc]="profilePhotoUrl()" alt="The current user's profile photo">
 ```
 
-### Attributes
+### Text interpolation in properties
 
-When you need to set HTML attributes that do not have corresponding DOM properties, such as SVG attributes, you can bind attributes to elements in your template with the `attr.` prefix.
-
-NOTE: Angular no longer requires the `attr.` prefix for ARIA bindings.
-
-```angular-html
-<!-- Bind the `role` attribute on the `<ul>` element to the component's `listRole` property. -->
-<ul [attr.role]="listRole()">
-```
-
-In this example, every time `listRole` changes, Angular automatically sets the `role` attribute of the `<ul>` element by calling `setAttribute`.
-
-If the value of an attribute binding is `null`, Angular removes the attribute by calling `removeAttribute`.
-
-### Text interpolation in properties and attributes
-
-You can also use text interpolation syntax in properties and attributes by using the double curly brace syntax instead of square braces around the property or attribute name. When using this syntax, Angular treats the assignment as a property binding.
+You can also use text interpolation syntax in properties by using the double curly brace syntax instead of square braces around the property name. When using this syntax, Angular treats the assignment as a property binding.
 
 ```angular-html
 <!-- Binds a value to the `alt` property of the image element's DOM object. -->
 <img src="profile-photo.jpg" alt="Profile photo of {{ firstName() }}" >
-```
-
-To bind to an ARIA attribute with text interpolation, you can use it directly like any other HTML attribute.
-
-```angular-html
-<button aria-label="Save changes to {{ objectType() }}">
 ```
 
 ## CSS class and style property bindings

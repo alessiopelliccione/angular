@@ -32,17 +32,17 @@ In addition, while most HTML syntax is valid template syntax, Angular does not s
 
 You might also be interested in the following:
 
-| Topics                                                                      | Details                                                                                 |
-| :-------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------- |
-| [Binding dynamic text, properties, and attributes](guide/templates/binding) | Bind dynamic data to text, properties and attributes.                                   |
-| [Adding event listeners](guide/templates/event-listeners)                   | Respond to events in your templates.                                                    |
-| [Two-way binding](guide/templates/two-way-binding)                          | Simultaneously binds a value and propagate changes.                                     |
-| [Control flow](guide/templates/control-flow)                                | Conditionally show, hide and repeat elements.                                           |
-| [Pipes](guide/templates/pipes)                                              | Transform data declaratively.                                                           |
-| [Slotting child content with ng-content](guide/templates/ng-content)        | Control how components render content.                                                  |
-| [Create template fragments with ng-template](guide/templates/ng-template)   | Declare a template fragment.                                                            |
-| [Grouping elements with ng-container](guide/templates/ng-container)         | Group multiple elements together or mark a location for rendering.                      |
-| [Variables in templates](guide/templates/variables)                         | Learn about variable declarations.                                                      |
-| [Deferred loading with @defer](guide/templates/defer)                       | Create deferrable views with `@defer`.                                                  |
-| [Expression syntax](guide/templates/expression-syntax)                      | Learn similarities and differences between Angular expressions and standard JavaScript. |
-| [Whitespace in templates](guide/templates/whitespace)                       | Learn how Angular handles whitespace.                                                   |
+| Topics                                                                    | Details                                                                                 |
+| :------------------------------------------------------------------------ | :-------------------------------------------------------------------------------------- |
+| [Binding dynamic text and properties](guide/templates/binding)            | Bind dynamic data to text and properties.                                               |
+| [Adding event listeners](guide/templates/event-listeners)                 | Respond to events in your templates.                                                    |
+| [Two-way binding](guide/templates/two-way-binding)                        | Simultaneously binds a value and propagate changes.                                     |
+| [Control flow](guide/templates/control-flow)                              | Conditionally show, hide and repeat elements.                                           |
+| [Pipes](guide/templates/pipes)                                            | Transform data declaratively.                                                           |
+| [Slotting child content with ng-content](guide/templates/ng-content)      | Control how components render content.                                                  |
+| [Create template fragments with ng-template](guide/templates/ng-template) | Declare a template fragment.                                                            |
+| [Grouping elements with ng-container](guide/templates/ng-container)       | Group multiple elements together or mark a location for rendering.                      |
+| [Variables in templates](guide/templates/variables)                       | Learn about variable declarations.                                                      |
+| [Deferred loading with @defer](guide/templates/defer)                     | Create deferrable views with `@defer`.                                                  |
+| [Expression syntax](guide/templates/expression-syntax)                    | Learn similarities and differences between Angular expressions and standard JavaScript. |
+| [Whitespace in templates](guide/templates/whitespace)                     | Learn how Angular handles whitespace.                                                   |
