@@ -40,16 +40,6 @@
           "jsdocTags": []
         },
         {
-          "name": "accordionTrigger",
-          "type": "WritableSignal<any>",
-          "memberType": "property",
-          "memberTags": [
-            "readonly"
-          ],
-          "description": "The parent accordion trigger pattern that controls this panel. This is set by AccordionGroup.",
-          "jsdocTags": []
-        },
-        {
           "name": "expand",
           "signatures": [
             {
@@ -171,6 +161,16 @@
       "entryType": "directive",
       "members": [
         {
+          "name": "element",
+          "type": "HTMLElement",
+          "memberType": "property",
+          "memberTags": [
+            "readonly"
+          ],
+          "description": "A reference to the trigger element.",
+          "jsdocTags": []
+        },
+        {
           "name": "id",
           "type": "any",
           "memberType": "property",
@@ -182,16 +182,6 @@
           "jsdocTags": [],
           "inputAlias": "id",
           "isRequiredInput": false
-        },
-        {
-          "name": "element",
-          "type": "any",
-          "memberType": "property",
-          "memberTags": [
-            "readonly"
-          ],
-          "description": "The host native element.",
-          "jsdocTags": []
         },
         {
           "name": "panelId",
@@ -362,7 +352,7 @@
       "source": {
         "filePath": "src/aria/accordion/accordion.ts",
         "startLine": 132,
-        "endLine": 195
+        "endLine": 197
       }
     },
     {
@@ -372,12 +362,12 @@
       "members": [
         {
           "name": "element",
-          "type": "any",
+          "type": "HTMLElement",
           "memberType": "property",
           "memberTags": [
             "readonly"
           ],
-          "description": "The host native element.",
+          "description": "A reference to the group element.",
           "jsdocTags": []
         },
         {
@@ -526,8 +516,8 @@
       ],
       "source": {
         "filePath": "src/aria/accordion/accordion.ts",
-        "startLine": 232,
-        "endLine": 326
+        "startLine": 234,
+        "endLine": 329
       }
     },
     {
@@ -547,8 +537,8 @@
       "implements": [],
       "source": {
         "filePath": "src/aria/accordion/accordion.ts",
-        "startLine": 346,
-        "endLine": 350
+        "startLine": 349,
+        "endLine": 353
       }
     }
   ],
@@ -658,10 +648,6 @@
       "@angular/aria/accordion"
     ],
     [
-      "AccordionPanel.accordionTrigger",
-      "@angular/aria/accordion"
-    ],
-    [
       "AccordionPanel.expand",
       "@angular/aria/accordion"
     ],
@@ -678,11 +664,11 @@
       "@angular/aria/accordion"
     ],
     [
-      "AccordionTrigger.id",
+      "AccordionTrigger.element",
       "@angular/aria/accordion"
     ],
     [
-      "AccordionTrigger.element",
+      "AccordionTrigger.id",
       "@angular/aria/accordion"
     ],
     [

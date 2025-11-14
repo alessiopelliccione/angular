@@ -10,6 +10,16 @@
       "entryType": "directive",
       "members": [
         {
+          "name": "element",
+          "type": "HTMLElement",
+          "memberType": "property",
+          "memberTags": [
+            "readonly"
+          ],
+          "description": "A reference to the host element.",
+          "jsdocTags": []
+        },
+        {
           "name": "textDirection",
           "type": "any",
           "memberType": "property",
@@ -17,16 +27,6 @@
             "readonly"
           ],
           "description": "The directionality (LTR / RTL) context for the application (or a subtree of it).",
-          "jsdocTags": []
-        },
-        {
-          "name": "element",
-          "type": "HTMLButtonElement",
-          "memberType": "property",
-          "memberTags": [
-            "readonly"
-          ],
-          "description": "A reference to the menu element.",
           "jsdocTags": []
         },
         {
@@ -191,7 +191,7 @@
           "memberTags": [
             "readonly"
           ],
-          "description": "A reference to the menu element.",
+          "description": "A reference to the host element.",
           "jsdocTags": []
         },
         {
@@ -255,17 +255,7 @@
           "jsdocTags": []
         },
         {
-          "name": "items",
-          "type": "() => any",
-          "memberType": "property",
-          "memberTags": [
-            "readonly"
-          ],
-          "description": "The menu items as a writable signal.\n\nTODO(wagnermaciel): This would normally be a computed, but using a computed causes a bug where\nsometimes the items array is empty. The bug can be reproduced by switching this to use a\ncomputed and then quickly opening and closing menus in the dev app.",
-          "jsdocTags": []
-        },
-        {
-          "name": "isVisible",
+          "name": "visible",
           "type": "any",
           "memberType": "property",
           "memberTags": [
@@ -353,7 +343,7 @@
       "source": {
         "filePath": "/src/aria/menu/menu.ts",
         "startLine": 143,
-        "endLine": 273
+        "endLine": 274
       }
     },
     {
@@ -368,7 +358,7 @@
           "memberTags": [
             "readonly"
           ],
-          "description": "A reference to the menubar element.",
+          "description": "A reference to the host element.",
           "jsdocTags": []
         },
         {
@@ -449,16 +439,6 @@
           "isRequiredInput": false
         },
         {
-          "name": "items",
-          "type": "any",
-          "memberType": "property",
-          "memberTags": [
-            "readonly"
-          ],
-          "description": "The menu items as a writable signal.",
-          "jsdocTags": []
-        },
-        {
           "name": "onSelect",
           "type": "any",
           "memberType": "property",
@@ -524,8 +504,8 @@
       ],
       "source": {
         "filePath": "/src/aria/menu/menu.ts",
-        "startLine": 301,
-        "endLine": 384
+        "startLine": 302,
+        "endLine": 386
       }
     },
     {
@@ -540,7 +520,7 @@
           "memberTags": [
             "readonly"
           ],
-          "description": "A reference to the menu element.",
+          "description": "A reference to the host element.",
           "jsdocTags": []
         },
         {
@@ -621,7 +601,7 @@
           "isRequiredInput": false
         },
         {
-          "name": "isActive",
+          "name": "active",
           "type": "any",
           "memberType": "property",
           "memberTags": [
@@ -738,8 +718,8 @@
       ],
       "source": {
         "filePath": "/src/aria/menu/menu.ts",
-        "startLine": 400,
-        "endLine": 480
+        "startLine": 402,
+        "endLine": 482
       }
     },
     {
@@ -759,8 +739,8 @@
       "implements": [],
       "source": {
         "filePath": "/src/aria/menu/menu.ts",
-        "startLine": 499,
-        "endLine": 504
+        "startLine": 501,
+        "endLine": 506
       }
     }
   ],
@@ -882,11 +862,11 @@
       "@angular/aria/menu"
     ],
     [
-      "MenuTrigger.textDirection",
+      "MenuTrigger.element",
       "@angular/aria/menu"
     ],
     [
-      "MenuTrigger.element",
+      "MenuTrigger.textDirection",
       "@angular/aria/menu"
     ],
     [
@@ -950,11 +930,7 @@
       "@angular/aria/menu"
     ],
     [
-      "Menu.items",
-      "@angular/aria/menu"
-    ],
-    [
-      "Menu.isVisible",
+      "Menu.visible",
       "@angular/aria/menu"
     ],
     [
@@ -1006,10 +982,6 @@
       "@angular/aria/menu"
     ],
     [
-      "MenuBar.items",
-      "@angular/aria/menu"
-    ],
-    [
       "MenuBar.onSelect",
       "@angular/aria/menu"
     ],
@@ -1050,7 +1022,7 @@
       "@angular/aria/menu"
     ],
     [
-      "MenuItem.isActive",
+      "MenuItem.active",
       "@angular/aria/menu"
     ],
     [

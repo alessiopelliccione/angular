@@ -20,6 +20,16 @@
           "jsdocTags": []
         },
         {
+          "name": "element",
+          "type": "HTMLElement",
+          "memberType": "property",
+          "memberTags": [
+            "readonly"
+          ],
+          "description": "A reference to the host element.",
+          "jsdocTags": []
+        },
+        {
           "name": "textDirection",
           "type": "any",
           "memberType": "property",
@@ -118,39 +128,6 @@
           "memberTags": [],
           "description": "The values of the currently selected items.",
           "jsdocTags": []
-        },
-        {
-          "name": "onFocus",
-          "signatures": [
-            {
-              "name": "onFocus",
-              "entryType": "function",
-              "description": "",
-              "generics": [],
-              "isNewType": false,
-              "jsdocTags": [],
-              "params": [],
-              "rawComment": "",
-              "returnType": "void"
-            }
-          ],
-          "implementation": {
-            "params": [],
-            "isNewType": false,
-            "returnType": "void",
-            "generics": [],
-            "name": "onFocus",
-            "description": "",
-            "entryType": "function",
-            "jsdocTags": [],
-            "rawComment": ""
-          },
-          "entryType": "function",
-          "description": "",
-          "jsdocTags": [],
-          "rawComment": "",
-          "memberType": "method",
-          "memberTags": []
         },
         {
           "name": "scrollActiveItemIntoView",
@@ -256,7 +233,7 @@
       "source": {
         "filePath": "/src/aria/listbox/listbox.ts",
         "startLine": 47,
-        "endLine": 206
+        "endLine": 209
       }
     },
     {
@@ -264,6 +241,24 @@
       "isAbstract": false,
       "entryType": "directive",
       "members": [
+        {
+          "name": "element",
+          "type": "HTMLElement",
+          "memberType": "property",
+          "memberTags": [
+            "readonly"
+          ],
+          "description": "A reference to the host element.",
+          "jsdocTags": []
+        },
+        {
+          "name": "active",
+          "type": "any",
+          "memberType": "property",
+          "memberTags": [],
+          "description": "Whether the option is currently active (focused).",
+          "jsdocTags": []
+        },
         {
           "name": "id",
           "type": "any",
@@ -285,26 +280,6 @@
             "protected"
           ],
           "description": "The text used by the typeahead search.",
-          "jsdocTags": []
-        },
-        {
-          "name": "listbox",
-          "type": "any",
-          "memberType": "property",
-          "memberTags": [
-            "protected"
-          ],
-          "description": "The parent Listbox UIPattern.",
-          "jsdocTags": []
-        },
-        {
-          "name": "element",
-          "type": "any",
-          "memberType": "property",
-          "memberTags": [
-            "protected"
-          ],
-          "description": "A reference to the option element to be focused on navigation.",
           "jsdocTags": []
         },
         {
@@ -375,8 +350,8 @@
       ],
       "source": {
         "filePath": "/src/aria/listbox/listbox.ts",
-        "startLine": 223,
-        "endLine": 277
+        "startLine": 226,
+        "endLine": 283
       }
     }
   ],
@@ -466,6 +441,10 @@
       "@angular/aria/listbox"
     ],
     [
+      "Listbox.element",
+      "@angular/aria/listbox"
+    ],
+    [
       "Listbox.textDirection",
       "@angular/aria/listbox"
     ],
@@ -514,10 +493,6 @@
       "@angular/aria/listbox"
     ],
     [
-      "Listbox.onFocus",
-      "@angular/aria/listbox"
-    ],
-    [
       "Listbox.scrollActiveItemIntoView",
       "@angular/aria/listbox"
     ],
@@ -530,19 +505,19 @@
       "@angular/aria/listbox"
     ],
     [
+      "Option.element",
+      "@angular/aria/listbox"
+    ],
+    [
+      "Option.active",
+      "@angular/aria/listbox"
+    ],
+    [
       "Option.id",
       "@angular/aria/listbox"
     ],
     [
       "Option.searchTerm",
-      "@angular/aria/listbox"
-    ],
-    [
-      "Option.listbox",
-      "@angular/aria/listbox"
-    ],
-    [
-      "Option.element",
       "@angular/aria/listbox"
     ],
     [
