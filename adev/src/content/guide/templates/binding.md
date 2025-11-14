@@ -106,7 +106,7 @@ If the value of an attribute binding is `null`, Angular removes the attribute by
 
 ### ARIA attributes
 
-Angular supports binding string values to ARIA attributes without using the `attr.` prefix.
+Angular supports binding string values to ARIA attributes.
 
 ```angular-html
 <button type="button" [aria-label]="actionLabel()">
