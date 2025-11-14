@@ -10,6 +10,9 @@ import {inject, Injectable, InjectionToken, DOCUMENT} from '@angular/core';
 
 import {getDOM} from '../dom_adapter';
 
+const TEXT_FRAGMENT_DIRECTIVE = ':~:text=';
+const TEXT_FRAGMENT_DEBUG = true;
+
 /**
  * This class should not be used directly by an application developer. Instead, use
  * {@link Location}.
@@ -109,11 +112,32 @@ export class BrowserPlatformLocation extends PlatformLocation {
   private _location: Location;
   private _history: History;
   private _doc = inject(DOCUMENT);
+  private textFragmentHash: string | null = null;
+  private readonly initialPathQuery: string;
+  private skipInitialReplace = false;
 
   constructor() {
     super();
     this._location = window.location;
     this._history = window.history;
+    this.initialPathQuery = `${this._location.pathname}${this._location.search}`;
+    this.textFragmentHash = this.detectInitialTextFragment();
+    this.skipInitialReplace = !!this.textFragmentHash;
+    if (TEXT_FRAGMENT_DEBUG) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        '[TextFragmentDebug] BrowserPlatformLocation init; hash:',
+        this._location.hash,
+        'href:',
+        this._location.href,
+        'detected:',
+        this.textFragmentHash,
+      );
+    }
+    if (TEXT_FRAGMENT_DEBUG && !this.textFragmentHash) {
+      // eslint-disable-next-line no-console
+      console.warn('[TextFragmentDebug] no text fragment detected in initial sources');
+    }
   }
 
   override getBaseHrefFromDOM(): string {
@@ -158,11 +182,22 @@ export class BrowserPlatformLocation extends PlatformLocation {
   }
 
   override pushState(state: any, title: string, url: string): void {
-    this._history.pushState(state, title, url);
+    const normalizedUrl = this.ensureTextFragment(url, this.currentPathQuery());
+    this._history.pushState(state, title, normalizedUrl ?? '');
   }
 
   override replaceState(state: any, title: string, url: string): void {
-    this._history.replaceState(state, title, url);
+    const normalizedUrl = this.ensureTextFragment(url, this.currentPathQuery());
+    if (this.skipInitialReplace && this.isSameInitialPath(normalizedUrl)) {
+      if (TEXT_FRAGMENT_DEBUG) {
+        // eslint-disable-next-line no-console
+        console.warn('[TextFragmentDebug] skipping initial replaceState to preserve highlight');
+      }
+      this.skipInitialReplace = false;
+      return;
+    }
+    this.skipInitialReplace = false;
+    this._history.replaceState(state, title, normalizedUrl ?? '');
   }
 
   override forward(): void {
@@ -179,5 +214,116 @@ export class BrowserPlatformLocation extends PlatformLocation {
 
   override getState(): unknown {
     return this._history.state;
+  }
+
+  private ensureTextFragment(
+    url: string | URL | null | undefined,
+    initialPathQuery: string,
+  ): string | null {
+    const fragment = this.textFragmentHash;
+    if (!fragment) {
+      return url == null ? null : String(url);
+    }
+    if (url == null || url === '') {
+      if ((this._doc?.defaultView ?? window).location.hash.includes(TEXT_FRAGMENT_DIRECTIVE)) {
+        this.textFragmentHash = null;
+        return null;
+      }
+      return `${initialPathQuery}${fragment}`;
+    }
+    try {
+      const resolved = new URL(String(url), this._location.href);
+      const pathQuery = `${resolved.pathname}${resolved.search}`;
+      if (pathQuery === initialPathQuery && !resolved.hash.includes(TEXT_FRAGMENT_DIRECTIVE)) {
+        resolved.hash = fragment;
+        return resolved.toString();
+      }
+      this.textFragmentHash = null;
+      return String(url);
+    } catch {
+      this.textFragmentHash = null;
+      return url == null ? null : String(url);
+    }
+  }
+
+  private isSameInitialPath(url: string | URL | null | undefined): boolean {
+    if (url == null) {
+      return true;
+    }
+    const value = String(url);
+    const fragmentIndex = value.indexOf('#');
+    const pathQuery = fragmentIndex === -1 ? value : value.slice(0, fragmentIndex);
+    return pathQuery === this.initialPathQuery;
+  }
+
+  private currentPathQuery(): string {
+    return `${this._location.pathname}${this._location.search}`;
+  }
+
+  private detectInitialTextFragment(): string | null {
+    const sources = [
+      this.extractFragment(this._location.href),
+      this.extractFragment(this.getNavigationEntryUrl()),
+      this.extractFragmentFromFragmentDirective(),
+    ];
+    for (const fragment of sources) {
+      if (fragment) {
+        return fragment;
+      }
+    }
+    return null;
+  }
+
+  private extractFragment(url: string | null | undefined): string | null {
+    if (!url || !url.includes(TEXT_FRAGMENT_DIRECTIVE)) {
+      return null;
+    }
+    const hashIndex = url.indexOf('#');
+    if (hashIndex === -1) {
+      return null;
+    }
+    return url.substring(hashIndex);
+  }
+
+  private getNavigationEntryUrl(): string | null {
+    if (typeof performance === 'undefined') {
+      return null;
+    }
+    const navEntries = performance.getEntriesByType?.('navigation') as
+      | PerformanceNavigationTiming[]
+      | undefined;
+    if (navEntries && navEntries.length) {
+      return navEntries[0].name;
+    }
+    const navEntry = (performance as any).navigation;
+    if (navEntry && typeof navEntry === 'object' && 'type' in navEntry) {
+      return (navEntry as any).name ?? null;
+    }
+    return null;
+  }
+
+  private extractFragmentFromFragmentDirective(): string | null {
+    const fragmentDirective = (this._doc as any)?.fragmentDirective;
+    const textRanges = fragmentDirective?.text;
+    if (!Array.isArray(textRanges) || textRanges.length === 0) {
+      return null;
+    }
+    const firstRange = textRanges[0];
+    const textStart = firstRange?.textStart;
+    const textEnd = firstRange?.textEnd;
+    if (!textStart && !textEnd) {
+      return null;
+    }
+    const encode = (value: string) =>
+      value
+        .replace(/\s+/g, ' ')
+        .split(' ')
+        .map((segment) => encodeURIComponent(segment))
+        .join(' ');
+    if (textStart && textEnd) {
+      return `#:~:text=${encode(textStart)},${encode(textEnd)}`;
+    }
+    const text = textStart ?? textEnd;
+    return text ? `#:~:text=${encode(text)}` : null;
   }
 }
