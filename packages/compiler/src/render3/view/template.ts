@@ -22,6 +22,9 @@ import {I18nMetaVisitor} from './i18n/meta';
 
 export const LEADING_TRIVIA_CHARS = [' ', '\n', '\r', '\t'];
 
+/** Error shown when `<ng-content>` is placed inside a control-flow block. */
+const CONDITIONAL_NG_CONTENT_ERROR_MESSAGE = 'Conditional ng-content is not supported.';
+
 /**
  * Options that can be used to modify how a template is parsed by `parseTemplate()`.
  */
@@ -260,7 +263,11 @@ export function parseTemplate(
     bindingParser,
     {collectCommentNodes: !!options.collectCommentNodes},
   );
-  errors.push(...parseResult.errors, ...i18nMetaResult.errors);
+  errors.push(
+    ...parseResult.errors,
+    ...i18nMetaResult.errors,
+    ...collectConditionalNgContentErrors(nodes),
+  );
 
   const parsedTemplate: ParsedTemplate = {
     preserveWhitespaces,
@@ -275,6 +282,67 @@ export function parseTemplate(
     parsedTemplate.commentNodes = commentNodes;
   }
   return parsedTemplate;
+}
+
+/**
+ * Returns any diagnostics found while validating that `<ng-content>` is not used within
+ * control-flow blocks (e.g. `@if`, `@for`, `@switch`).
+ */
+function collectConditionalNgContentErrors(nodes: t.Node[]): ParseError[] {
+  if (nodes.length === 0) {
+    return [];
+  }
+
+  const visitor = new ConditionalNgContentVisitor();
+  t.visitAll(visitor, nodes);
+  return visitor.errors;
+}
+
+/** Visitor that reports `<ng-content>` usage while nested under a control-flow block. */
+class ConditionalNgContentVisitor extends t.RecursiveVisitor {
+  readonly errors: ParseError[] = [];
+  private controlFlowDepth = 0;
+
+  override visitContent(content: t.Content): void {
+    if (this.controlFlowDepth > 0) {
+      this.errors.push(new ParseError(content.sourceSpan, CONDITIONAL_NG_CONTENT_ERROR_MESSAGE));
+    }
+    super.visitContent(content);
+  }
+
+  override visitIfBlock(block: t.IfBlock): void {
+    this.withinControlFlow(() => super.visitIfBlock(block));
+  }
+
+  override visitIfBlockBranch(block: t.IfBlockBranch): void {
+    this.withinControlFlow(() => super.visitIfBlockBranch(block));
+  }
+
+  override visitForLoopBlock(block: t.ForLoopBlock): void {
+    this.withinControlFlow(() => super.visitForLoopBlock(block));
+  }
+
+  override visitForLoopBlockEmpty(block: t.ForLoopBlockEmpty): void {
+    this.withinControlFlow(() => super.visitForLoopBlockEmpty(block));
+  }
+
+  override visitSwitchBlock(block: t.SwitchBlock): void {
+    this.withinControlFlow(() => super.visitSwitchBlock(block));
+  }
+
+  override visitSwitchBlockCase(block: t.SwitchBlockCase): void {
+    this.withinControlFlow(() => super.visitSwitchBlockCase(block));
+  }
+
+  /** Runs `callback` while marking the visitor as being inside a control-flow block. */
+  private withinControlFlow<T>(callback: () => T): T {
+    this.controlFlowDepth++;
+    try {
+      return callback();
+    } finally {
+      this.controlFlowDepth--;
+    }
+  }
 }
 
 const elementRegistry = new DomElementSchemaRegistry();

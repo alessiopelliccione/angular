@@ -5,6 +5,11 @@
   (docsClickOutside)="closeMobileNav()"
   [docsClickOutsideIgnore]="[SECONDARY_NAV_ID]"
 >
+  @if (true) {
+    <ng-content></ng-content>
+  } @else {
+    <ng-content></ng-content>
+  }
   <!-- Mobile nav bar -->
   <div class="adev-mobile-nav-bar">
     <!-- Logo icon -->
