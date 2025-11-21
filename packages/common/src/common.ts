@@ -102,6 +102,8 @@ export {
   ImageLoader,
   ImageLoaderConfig,
   NgOptimizedImage,
+  NgOptimizedPicture,
+  PictureSource,
   ImagePlaceholderConfig,
   PRECONNECT_CHECK_BLOCKLIST,
   provideCloudflareLoader,
